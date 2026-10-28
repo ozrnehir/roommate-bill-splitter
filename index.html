@@ -9,6 +9,24 @@
   </head>
 
   <body>
+    <section id="authScreen" class="auth-screen">
+      <div class="auth-panel">
+        <div class="auth-brand">🏠 <strong>SplitMate</strong></div>
+        <p class="tag">YOUR HOME. YOUR EXPENSES.</p>
+        <h2 id="authTitle">Welcome back</h2>
+        <p class="description">A simple space to split bills fairly.</p>
+        <form id="authForm">
+          <div id="registerFields" hidden><label for="authName">Full name</label><input id="authName" autocomplete="name" placeholder="Your name" /></div>
+          <label for="authEmail">Email</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com" />
+          <label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" required minlength="6" placeholder="At least 6 characters" />
+          <div id="authError" class="form-error" role="alert" hidden></div>
+          <button class="primary-button" id="authSubmit" type="submit">Log in</button>
+        </form>
+        <p class="auth-switch"><span id="authPrompt">New to SplitMate?</span> <button id="authToggle" type="button" class="text-button">Create an account</button></p>
+        <p class="demo-note">Prototype only · Use a fictional email and password. Accounts stay in this browser and are not secure.</p>
+      </div>
+    </section>
+    <div id="appShell" hidden>
     <header>
       <div class="logo">
         <span>🏠</span>
@@ -20,10 +38,21 @@
         <a href="#roommates">Roommates</a>
         <a href="#expenses">Expenses</a>
         <a href="#balances">Balances</a>
+        <button id="profileButton" type="button" class="nav-button">My Profile</button>
+        <button id="logoutButton" type="button" class="nav-button">Log out</button>
       </nav>
     </header>
 
     <main>
+      <section class="card group-card" id="groupPanel">
+        <div class="group-heading"><div><p class="tag">YOUR SPACE</p><h3 id="groupTitle">Your group</h3><p id="groupStatus" class="description"></p></div><span id="roleBadge" class="role-badge"></span></div>
+        <div id="groupSetup">
+          <div class="group-options"><div><h4>Create a home</h4><p class="description">Become the admin of your new group.</p><input id="newGroupName" placeholder="e.g. Maple Street Flat"/><button id="createGroupBtn" class="primary-button">Create group</button></div>
+          <div><h4>Join a home</h4><p class="description">Enter the invitation code shared by an admin.</p><input id="joinGroupCode" placeholder="Group code"/><button id="joinGroupBtn" class="primary-button">Join group</button></div></div>
+        </div>
+        <div id="groupDetails" hidden><p>Invite code (same-browser demo): <strong id="groupCode"></strong></p><p id="groupMembers" class="description"></p><p class="demo-note">Group invitations work only for accounts created in this same browser. No online sharing or real access control.</p></div>
+      </section>
+      <div id="expenseApp" hidden>
       <!-- DASHBOARD -->
 
       <section class="hero" id="home">
@@ -100,6 +129,7 @@
             placeholder="0.00"
             min="0.01"
             step="0.01"
+             max="9999999999.99"
           />
 
           <label for="paidBy">Who Paid?</label>
@@ -151,8 +181,21 @@
 
         <div id="paymentList"></div>
       </section>
+      </div>
     </main>
 
+    <div id="toastRegion" class="toast-region" role="status" aria-live="polite" aria-atomic="true"></div>
+    <dialog id="confirmDialog" class="confirm-dialog" aria-labelledby="confirmTitle">
+      <h3 id="confirmTitle">Please confirm</h3>
+      <p id="confirmText"></p>
+      <div class="dialog-actions"><button id="cancelConfirm" type="button" class="secondary-button">Cancel</button><button id="acceptConfirm" type="button">Confirm</button></div>
+    </dialog>
+    <dialog id="profileDialog" class="profile-dialog" aria-labelledby="profileHeading">
+      <div class="profile-top"><div class="profile-avatar" id="profileAvatar">S</div><div><h2 id="profileHeading">My Profile</h2><p class="description">Manage your SplitMate account</p></div></div>
+      <div class="profile-details"><div><span>Email</span><strong id="profileEmail"></strong></div><div><span>Group</span><strong id="profileGroup"></strong></div><div><span>Role</span><strong id="profileRole"></strong></div></div>
+      <form id="profileForm"><label for="profileName">Full name</label><input id="profileName" required minlength="2" maxlength="80" autocomplete="name" /><button type="submit" class="primary-button">Save changes</button></form>
+      <button type="button" id="closeProfile" class="secondary-button profile-close">Close</button>
+    </dialog>
     <footer>
       <p>SplitMate — fair bills, happier roommates.</p>
     </footer>
