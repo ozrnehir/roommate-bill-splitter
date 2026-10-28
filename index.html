@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SplitMate | Roommate Bill Splitter</title>
     <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
   </head>
 
   <body>
@@ -13,86 +14,147 @@
         <span>🏠</span>
         <h1>SplitMate</h1>
       </div>
-      <p>Shared bills made simple.</p>
+
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#roommates">Roommates</a>
+        <a href="#expenses">Expenses</a>
+        <a href="#balances">Balances</a>
+      </nav>
     </header>
 
     <main>
-      <section class="hero">
+      <!-- DASHBOARD -->
+
+      <section class="hero" id="home">
         <div>
           <p class="tag">ROOMMATE EXPENSE TRACKER</p>
+
           <h2>Split bills.<br />Keep friendships.</h2>
+
           <p class="hero-text">
-            A simple way for roommates to divide shared utility bills fairly
-            without spreadsheets, calculations, or awkward conversations.
+            A simple way for roommates to manage shared expenses, track
+            payments, and split bills fairly without awkward conversations.
           </p>
         </div>
 
         <div class="total-card">
           <p>TOTAL SHARED EXPENSES</p>
           <h3 id="totalExpenses">€0.00</h3>
-          <span>Across all utility bills</span>
+          <span>Across all shared bills</span>
         </div>
       </section>
 
+      <!-- DASHBOARD STATISTICS -->
+
+      <section class="stats-grid">
+        <div class="stat-card">
+          <p>ROOMMATES</p>
+          <h3 id="roommateCount">0</h3>
+        </div>
+
+        <div class="stat-card">
+          <p>OUTSTANDING BALANCES</p>
+          <h3 id="outstandingBalance">€0.00</h3>
+        </div>
+
+        <div class="stat-card">
+          <p>COMPLETED PAYMENTS</p>
+          <h3 id="completedPayments">0</h3>
+        </div>
+      </section>
+
+      <!-- ROOMMATES AND ADD EXPENSE -->
+
       <section class="grid">
-        <div class="card">
+        <div class="card" id="roommates">
           <h3>👥 Roommates</h3>
+
           <p class="description">Add everyone sharing the apartment.</p>
 
           <div class="input-row">
             <input type="text" id="roommateName" placeholder="Roommate name" />
+
             <button id="addRoommateBtn">Add</button>
           </div>
 
           <div id="roommateList"></div>
         </div>
 
-        <div class="card">
-          <h3>🧾 Add a Bill</h3>
-          <p class="description">Enter a shared utility expense.</p>
+        <div class="card" id="expenses">
+          <h3>🧾 Add an Expense</h3>
 
-          <label>Bill name</label>
-          <input type="text" id="billName" placeholder="e.g. Electricity" />
+          <p class="description">
+            Enter an expense and choose who paid for it.
+          </p>
 
-          <label>Total amount (€)</label>
+          <label for="billName">Expense Name</label>
+
+          <input type="text" id="billName" placeholder="e.g. Groceries" />
+
+          <label for="billAmount">Total Amount (€)</label>
+
           <input
             type="number"
             id="billAmount"
             placeholder="0.00"
-            min="0"
+            min="0.01"
             step="0.01"
           />
 
-          <label>Who is included?</label>
+          <label for="paidBy">Who Paid?</label>
+
+          <select id="paidBy">
+            <option value="">Select a roommate</option>
+          </select>
+
+          <label>Split Between</label>
+
           <div id="roommateCheckboxes" class="checkbox-list"></div>
 
-          <button id="addBillBtn" class="primary-button">Split Bill</button>
+          <button id="addBillBtn" class="primary-button">Split Expense</button>
         </div>
       </section>
 
-      <section class="card bills-section">
-        <div class="section-heading">
-          <div>
-            <h3>📊 Shared Bills</h3>
-            <p class="description">See how every expense is divided.</p>
-          </div>
-        </div>
+      <!-- BALANCES -->
+
+      <section class="card" id="balances">
+        <h3>💸 Who Owes Whom?</h3>
+
+        <p class="description">See exactly who needs to pay whom.</p>
+
+        <div id="balanceList"></div>
+      </section>
+
+      <!-- EXPENSE HISTORY -->
+
+      <section class="card">
+        <h3>📊 Expense History</h3>
+
+        <p class="description">View and manage all shared expenses.</p>
+
+        <input
+          type="text"
+          id="searchExpense"
+          placeholder="Search expenses..."
+        />
 
         <div id="billList"></div>
       </section>
 
-      <section class="card">
-        <h3>💰 Who Owes What?</h3>
-        <p class="description">Total amount owed by each roommate.</p>
+      <!-- PAYMENT HISTORY -->
 
-        <div id="summaryList" class="summary-grid"></div>
+      <section class="card">
+        <h3>✅ Payment History</h3>
+
+        <p class="description">Track completed payments between roommates.</p>
+
+        <div id="paymentList"></div>
       </section>
     </main>
 
     <footer>
       <p>SplitMate — fair bills, happier roommates.</p>
     </footer>
-
-    <script src="script.js"></script>
   </body>
 </html>
